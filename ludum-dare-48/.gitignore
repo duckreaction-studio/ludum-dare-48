@@ -57,10 +57,14 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
-Assets/Ludiq
-Assets/Ludiq.Generated
-Assets/Plugins
+[Aa]ssets/Ludiq
+[Aa]ssets/Ludiq.Generated
+[Aa]ssets/Plugins
 
-Assets/Ludiq.meta
-Assets/Ludiq.Generated.meta
-Assets/Plugins.meta
+[Aa]ssets/Ludiq.meta
+[Aa]ssets/Ludiq.Generated.meta
+[Aa]ssets/Plugins.meta
+
+[Uu]serSettings
+.vscode
+.vsconfig
