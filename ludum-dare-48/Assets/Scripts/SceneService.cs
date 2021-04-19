@@ -14,6 +14,9 @@ public class SceneService : MonoBehaviour
     Image _imageEffect;
 
     [SerializeField]
+    float _targetY = 500;
+
+    [SerializeField]
     float _transitionDuration = 0.5f;
 
     List<string> _scenesToUnload;
@@ -22,6 +25,8 @@ public class SceneService : MonoBehaviour
     void Start()
     {
         _imageEffect.color = Color.black;
+        Vector2 target = ((RectTransform)_imageEffect.transform).anchoredPosition;
+        target.y = _targetY;
 
         StartSceneTransition(new string[0], _firstScenes, false);
     }
@@ -32,7 +37,7 @@ public class SceneService : MonoBehaviour
         _scenesToLoad = new List<string>(scenesToLoad);
 
         if (fadeIn)
-            _imageEffect.DOFade(1, _transitionDuration).onComplete += ProcessNextScene;
+            FadeInAnimation();
         else
             ProcessNextScene();
     }
@@ -46,7 +51,7 @@ public class SceneService : MonoBehaviour
     {
         if (_scenesToUnload.Count == 0 && _scenesToLoad.Count == 0)
         {
-            OnScenesLoaded();
+            FadeOutAnimation();
         }
         else if (_scenesToUnload.Count == 0)
         {
@@ -70,9 +75,22 @@ public class SceneService : MonoBehaviour
         SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive).completed += OnSceneLoadedOrUnloaded;
     }
 
-    private void OnScenesLoaded()
+    [ContextMenu("Test fade in")]
+    private void FadeInAnimation()
     {
-        _imageEffect.DOFade(0, _transitionDuration).onComplete += OnFadeInComplete;
+        //_imageEffect.DOFade(1, _transitionDuration).onComplete += ProcessNextScene;
+        Vector2 target = ((RectTransform)_imageEffect.transform).anchoredPosition;
+        target.y = 0;
+        ((RectTransform)_imageEffect.transform).DOAnchorPos(target, _transitionDuration).onComplete += ProcessNextScene;
+    }
+
+    [ContextMenu("Test fade out")]
+    private void FadeOutAnimation()
+    {
+        //_imageEffect.DOFade(0, _transitionDuration).onComplete += OnFadeInComplete;
+        Vector2 target = ((RectTransform)_imageEffect.transform).anchoredPosition;
+        target.y = _targetY;
+        ((RectTransform)_imageEffect.transform).DOAnchorPos(target, _transitionDuration);
     }
 
     private void OnFadeInComplete()

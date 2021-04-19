@@ -392,7 +392,8 @@ MonoBehaviour:
   _firstScenes:
   - Scenes/Home
   _imageEffect: {fileID: 545477769}
-  _transitionDuration: 0.5
+  _targetY: 1000
+  _transitionDuration: 0.7
 --- !u!4 &1316777349
 Transform:
   m_ObjectHideFlags: 0
