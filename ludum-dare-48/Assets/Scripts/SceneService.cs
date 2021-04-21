@@ -1,5 +1,6 @@
 using DG.Tweening;
 using DuckReaction.Common.Container;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,7 @@ public class SceneService : MonoBehaviour
     [SerializeField]
     Image _imageEffect;
 
-    [SerializeField]
+    [ShowInInspector, ReadOnly]
     float _targetY = 500;
 
     [SerializeField]
@@ -24,11 +25,15 @@ public class SceneService : MonoBehaviour
 
     void Start()
     {
+        _targetY = Screen.height;
         _imageEffect.color = Color.black;
         Vector2 target = ((RectTransform)_imageEffect.transform).anchoredPosition;
         target.y = _targetY;
 
-        StartSceneTransition(new string[0], _firstScenes, false);
+        if (SceneManager.sceneCount == 1)
+            StartSceneTransition(new string[0], _firstScenes, false);
+        else
+            TransitionEndAnimation();
     }
 
     public void StartSceneTransition(string[] scenesToUnload, string[] scenesToLoad, bool fadeIn = true)
@@ -37,7 +42,7 @@ public class SceneService : MonoBehaviour
         _scenesToLoad = new List<string>(scenesToLoad);
 
         if (fadeIn)
-            FadeInAnimation();
+            TransitionStartAnimation();
         else
             ProcessNextScene();
     }
@@ -51,7 +56,7 @@ public class SceneService : MonoBehaviour
     {
         if (_scenesToUnload.Count == 0 && _scenesToLoad.Count == 0)
         {
-            FadeOutAnimation();
+            TransitionEndAnimation();
         }
         else if (_scenesToUnload.Count == 0)
         {
@@ -75,26 +80,20 @@ public class SceneService : MonoBehaviour
         SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive).completed += OnSceneLoadedOrUnloaded;
     }
 
-    [ContextMenu("Test fade in")]
-    private void FadeInAnimation()
+    [ContextMenu("Test transition start animation")]
+    private void TransitionStartAnimation()
     {
-        //_imageEffect.DOFade(1, _transitionDuration).onComplete += ProcessNextScene;
-        Vector2 target = ((RectTransform)_imageEffect.transform).anchoredPosition;
-        target.y = 0;
-        ((RectTransform)_imageEffect.transform).DOAnchorPos(target, _transitionDuration).onComplete += ProcessNextScene;
+        _imageEffect.rectTransform.DOAnchorPosY(0, _transitionDuration).onComplete += ProcessNextScene;
     }
 
-    [ContextMenu("Test fade out")]
-    private void FadeOutAnimation()
+    [ContextMenu("Test transition end animation")]
+    private void TransitionEndAnimation()
     {
-        //_imageEffect.DOFade(0, _transitionDuration).onComplete += OnFadeInComplete;
-        Vector2 target = ((RectTransform)_imageEffect.transform).anchoredPosition;
-        target.y = _targetY;
-        ((RectTransform)_imageEffect.transform).DOAnchorPos(target, _transitionDuration);
+        _imageEffect.rectTransform.DOAnchorPosY(_targetY, _transitionDuration).onComplete += OnTransitionComplete;
     }
 
-    private void OnFadeInComplete()
+    private void OnTransitionComplete()
     {
-        Debug.Log("Fade in complete");
+        Debug.Log("Transition complete");
     }
 }
