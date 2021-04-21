@@ -83,13 +83,13 @@ public class SceneService : MonoBehaviour
     [ContextMenu("Test transition start animation")]
     private void TransitionStartAnimation()
     {
-        _imageEffect.rectTransform.DOAnchorPosY(0, _transitionDuration).onComplete += ProcessNextScene;
+        _imageEffect.rectTransform.DOAnchorPosY(0, _transitionDuration).SetEase(Ease.OutCubic).onComplete += ProcessNextScene;
     }
 
     [ContextMenu("Test transition end animation")]
     private void TransitionEndAnimation()
     {
-        _imageEffect.rectTransform.DOAnchorPosY(_targetY, _transitionDuration).onComplete += OnTransitionComplete;
+        _imageEffect.rectTransform.DOAnchorPosY(_targetY, _transitionDuration).SetEase(Ease.OutCubic).onComplete += OnTransitionComplete;
     }
 
     private void OnTransitionComplete()
