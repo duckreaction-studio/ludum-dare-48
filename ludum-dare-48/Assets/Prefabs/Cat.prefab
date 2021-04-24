@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distanceFromBowl: 1
+  _defaultHungry: 0.6
 --- !u!136 &2528803655598468741
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -179,6 +180,11 @@ PrefabInstance:
       propertyPath: m_BlendShapeWeights.Array.data[1]
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 2f72f66168ddfdd4bab11d7a85c81183,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4cde7f9dab768b54e968895ccaa071ac, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f72f66168ddfdd4bab11d7a85c81183, type: 3}
 --- !u!1 &9150044956215095695 stripped
