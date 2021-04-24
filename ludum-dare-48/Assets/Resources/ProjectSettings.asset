@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ProjectSettings
   m_EditorClassIdentifier: 
   catCommonSettings:
-    eatSpead: 0.3
+    eatSpeed: 0.3
     hungrySpeed: -0.05
     notHungry: 0.66
     veryHungry: 0.33
@@ -24,3 +24,6 @@ MonoBehaviour:
     normal: 1
     slow: 0.5
     verySlow: 0.1
+    distanceFromBowl: 1
+    initHungry: 0.6
+    hit: 0.4

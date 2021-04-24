@@ -33,6 +33,6 @@ public class CatCommonSettings
     [TitleGroup("Other")]
     public float distanceFromBowl = 1f;
     public float initHungry = 0.6f;
-    [Range(-1, 0)]
-    public float hit = -0.3f;
+    [Range(0, 1)]
+    public float hit = 0.3f;
 }

@@ -55,8 +55,21 @@ namespace Core
             if (_state == State.Happy || _state == State.AfterEat || _state == State.Dizzy)
             {
                 if (IsTimeout())
-                    SetState(State.Idle);
+                {
+                    UpdateStateAfterTimeout();
+                }
             }
+        }
+
+        private void UpdateStateAfterTimeout()
+        {
+            if (_state == State.Dizzy)
+            {
+                hungry -= common.hit;
+                UpdateHungry();
+            }
+            if (_state != State.Dead)
+                SetState(State.Idle);
         }
 
         private bool IsTimeout()
@@ -149,10 +162,7 @@ namespace Core
                 }
                 else
                 {
-                    hungry -= common.hit;
-                    UpdateHungry();
-                    if (_state != State.Dead)
-                        SetState(State.Dizzy);
+                    SetState(State.Dizzy);
                 }
             }
         }
