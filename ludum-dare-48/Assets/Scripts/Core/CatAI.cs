@@ -18,17 +18,8 @@ namespace Core
             Dead
         }
 
-        const float notHungry = 0.66f;
-        const float veryHungry = 0.33f;
-        const float fast = 2f;
-        const float normal = 1f;
-        const float slow = 0.5f;
-        const float verySlow = 0.1f;
-
-        [SerializeField]
-        float _distanceFromBowl = 0.5f;
-        [SerializeField]
-        float _defaultHungry = 0.6f;
+        [Inject]
+        ProjectSettings _projectSettings;
 
         [Inject]
         CatBowl _bowl;
@@ -37,9 +28,14 @@ namespace Core
 
         public float hungry { get; private set; }
 
+        private CatCommonSettings common
+        {
+            get => _projectSettings.catCommonSettings;
+        }
+
         public void OnAfterSpawn()
         {
-            hungry = _defaultHungry;
+            hungry = common.initHungry;
         }
 
         protected override void RunningUpdate()
@@ -71,46 +67,46 @@ namespace Core
             if (_state == State.Eating)
             {
                 if (isNotHungry())
-                    return slow;
+                    return common.slow;
                 else if (isVeryHungry())
-                    return fast;
+                    return common.fast;
                 else
-                    return normal;
+                    return common.normal;
             }
             else if (_state == State.Playing)
             {
-                return verySlow;
+                return common.verySlow;
             }
             else
             {
                 if (isNotHungry())
-                    return fast;
+                    return common.fast;
                 else if (isVeryHungry())
-                    return slow;
+                    return common.slow;
                 else
-                    return normal;
+                    return common.normal;
             }
         }
 
         public bool isVeryHungry()
         {
-            return hungry < veryHungry;
+            return hungry < common.veryHungry;
         }
 
         public bool isNotHungry()
         {
-            return hungry > notHungry;
+            return hungry > common.notHungry;
         }
 
         private float GetHungrySpeed()
         {
             if (_state == State.Eating)
             {
-                return 0.3f;
+                return common.eatSpeed;
             }
             else
             {
-                return -0.05f;
+                return common.hungrySpeed;
             }
         }
 
@@ -127,7 +123,7 @@ namespace Core
 
         private bool bowlIsCloseEnough()
         {
-            return Mathf.Abs(_bowl.transform.position.x - transform.position.x) < _distanceFromBowl;
+            return Mathf.Abs(_bowl.transform.position.x - transform.position.x) < common.distanceFromBowl;
         }
 
         private void StartEating()

@@ -9,6 +9,8 @@ public class MainInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        Container.Bind<ProjectSettings>().FromScriptableObjectResource("ProjectSettings").AsSingle();
+
         Container.Bind<CatSpawner>().FromComponentInHierarchy().AsSingle();
         Container.Bind<CatBowl>().FromComponentInHierarchy().AsSingle();
         Container.Bind<GameState>().FromComponentInHierarchy().AsSingle();

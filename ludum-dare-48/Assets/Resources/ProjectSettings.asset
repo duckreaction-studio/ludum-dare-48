@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b0b9859fe83af428f5fcbb11b964f8, type: 3}
+  m_Name: ProjectSettings
+  m_EditorClassIdentifier: 
+  catCommonSettings:
+    eatSpead: 0.3
+    hungrySpeed: -0.05
+    notHungry: 0.66
+    veryHungry: 0.33
+    happyDelay: 8
+    afterEatDelay: 4
+    dizzyDelay: 6
+    fast: 2
+    normal: 1
+    slow: 0.5
+    verySlow: 0.1
