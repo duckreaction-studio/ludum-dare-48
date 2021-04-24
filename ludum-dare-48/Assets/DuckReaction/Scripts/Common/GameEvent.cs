@@ -4,12 +4,22 @@ using UnityEngine;
 
 namespace DuckReaction.Common
 {
+    public enum GameEventType
+    {
+        GAME_START,
+        GAME_FINISHED,
+        GAME_PAUSE,
+        GAME_RESET,
+        LEVEL_UP,
+        LEVEL_DOWN
+    }
+
     public class GameEvent
     {
-        public string type { get; protected set; }
+        public GameEventType type { get; protected set; }
         public object param { get; protected set; }
 
-        public GameEvent(string type, object param = null)
+        public GameEvent(GameEventType type, object param = null)
         {
             this.type = type;
             this.param = param;

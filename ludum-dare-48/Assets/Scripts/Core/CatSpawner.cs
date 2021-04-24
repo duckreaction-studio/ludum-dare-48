@@ -1,3 +1,5 @@
+using DuckReaction.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,12 +20,25 @@ namespace Core
 
         [Inject]
         Cat.Factory _factory;
+        [Inject]
+        SignalBus _signalBus;
 
-        List<Cat> _activeCatList = new List<Cat>();
+        public List<Cat> activeCatList { get; private set; } = new List<Cat>();
+
+        public event EventHandler<int> catCountChanged;
 
         public void Start()
         {
             CreateFirstCats();
+            _signalBus.Subscribe<GameEvent>(OnGameEventReceived);
+        }
+
+        private void OnGameEventReceived(GameEvent gameEvent)
+        {
+            if (gameEvent.type == GameEventType.LEVEL_UP)
+                AddCats();
+            else if (gameEvent.type == GameEventType.GAME_RESET)
+                Reset();
         }
 
         private void CreateFirstCats()
@@ -54,17 +69,23 @@ namespace Core
 
         public void DestroyAllCats()
         {
-            while (_activeCatList.Count > 0)
+            while (activeCatList.Count > 0)
             {
-                RemoveCat(_activeCatList[0]);
+                RemoveCat(activeCatList[0]);
             }
         }
 
         public void AddCat()
         {
             var cat = _factory.Create(_lastId, GetCatPosition(_lastId));
-            _activeCatList.Add(cat);
+            activeCatList.Add(cat);
             ++_lastId;
+            InvokeCatCountChanged();
+        }
+
+        private void InvokeCatCountChanged()
+        {
+            catCountChanged?.Invoke(this, activeCatList.Count);
         }
 
         private Vector3 GetCatPosition(int id)
@@ -88,10 +109,11 @@ namespace Core
 
         public void RemoveCat(Cat cat)
         {
-            if (_activeCatList.Contains(cat))
+            if (activeCatList.Contains(cat))
             {
-                _activeCatList.Remove(cat);
+                activeCatList.Remove(cat);
                 cat.Dispose();
+                InvokeCatCountChanged();
             }
         }
 
