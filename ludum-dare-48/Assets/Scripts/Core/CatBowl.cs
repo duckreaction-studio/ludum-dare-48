@@ -9,30 +9,36 @@ public class CatBowl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
     [ShowInInspector, ReadOnly]
     Vector3 _basePosition;
 
-    Vector3 _mouseDiffPosition;
+    Camera _camera;
 
     public bool isMoving { get; private set; } = false;
 
     public void Awake()
     {
         _basePosition = transform.position;
+        _camera = Camera.main;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         isMoving = true;
-        _mouseDiffPosition = transform.position - eventData.pointerCurrentRaycast.worldPosition;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector3 mouseScreenPosition = eventData.position;
-        mouseScreenPosition.z = _basePosition.z - Camera.main.transform.position.z;
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
-        Vector3 newPos = mouseWorldPosition; // + _mouseDiffPosition;
+        Vector3 pointerWorldPosition = PointerScreenPositionToWorld(eventData);
+        Vector3 newPos = pointerWorldPosition;
         newPos.y = _basePosition.y;
         newPos.z = _basePosition.z;
         transform.position = newPos;
+    }
+
+    private Vector3 PointerScreenPositionToWorld(PointerEventData eventData)
+    {
+        Vector3 pointerScreenPosition = eventData.position;
+        pointerScreenPosition.z = _basePosition.z - _camera.transform.position.z;
+        Vector3 worldPosition = _camera.ScreenToWorldPoint(pointerScreenPosition);
+        return worldPosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
