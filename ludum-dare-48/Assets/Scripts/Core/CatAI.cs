@@ -22,7 +22,7 @@ namespace Core
         const float veryHungry = 0.33f;
         const float fast = 2f;
         const float normal = 1f;
-        const float slow = 2f;
+        const float slow = 0.5f;
         const float verySlow = 0.1f;
 
         [SerializeField]
@@ -106,11 +106,11 @@ namespace Core
         {
             if (_state == State.Eating)
             {
-                return 0.5f;
+                return 0.3f;
             }
             else
             {
-                return -0.25f;
+                return -0.05f;
             }
         }
 

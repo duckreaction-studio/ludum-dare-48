@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b0f770def89de541a156e1ccbb680c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catPrefab: {fileID: 6711952019877444392, guid: 0fd74b6346d823441b58d163aaccce59,
+  _catPrefab: {fileID: 2188195234197264336, guid: f3ca600174985fb4f90b72f3c6fea04d,
     type: 3}
 --- !u!114 &1967996041
 MonoBehaviour:
