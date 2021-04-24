@@ -10,12 +10,28 @@ namespace Core
     {
         private IMemoryPool _pool;
 
+        [Inject]
+        ProjectSettings _projectSettings;
+
+        [SerializeField]
+        SkinnedMeshRenderer _skinnedMesh;
+
+        public CatCategorySettings category { get; private set; }
+
         public void OnSpawned(int id, Vector3 position, IMemoryPool pool)
         {
             _pool = pool;
             gameObject.name = "Cat_" + id;
             transform.position = position;
+            category = _projectSettings.GetRandomCategory();
+            UpdateColors();
             BroadcastMessage("OnAfterSpawn", SendMessageOptions.DontRequireReceiver);
+        }
+
+        private void UpdateColors()
+        {
+            _skinnedMesh.materials[0].color = category.color1;
+            _skinnedMesh.materials[1].color = category.color2;
         }
 
         public void OnDespawned()

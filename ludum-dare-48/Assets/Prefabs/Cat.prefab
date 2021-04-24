@@ -262,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063616d20deb4d1478b31e86f7fe5f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skinnedMesh: {fileID: 2512627325919580201}
 --- !u!114 &3936873717967654432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,8 +275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6cafea155c960544a8174d4bb99a6ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distanceFromBowl: 1
-  _defaultHungry: 0.6
 --- !u!1 &6732268849877714112
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,6 +602,12 @@ GameObject:
 --- !u!4 &8480469155743427381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2f72f66168ddfdd4bab11d7a85c81183,
+    type: 3}
+  m_PrefabInstance: {fileID: 8230914055821528286}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2512627325919580201 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5828979002318216439, guid: 2f72f66168ddfdd4bab11d7a85c81183,
     type: 3}
   m_PrefabInstance: {fileID: 8230914055821528286}
   m_PrefabAsset: {fileID: 0}

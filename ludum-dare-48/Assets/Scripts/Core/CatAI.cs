@@ -37,6 +37,24 @@ namespace Core
             get => _projectSettings.catCommonSettings;
         }
 
+
+        private Cat _cat;
+        private Cat cat
+        {
+            get
+            {
+                if (_cat == null)
+                {
+                    _cat = GetComponent<Cat>();
+                }
+                return _cat;
+            }
+        }
+        private CatCategorySettings category
+        {
+            get => cat.category;
+        }
+
         public void OnAfterSpawn()
         {
             hungry = common.initHungry;
@@ -144,11 +162,11 @@ namespace Core
         {
             if (_state == State.Eating)
             {
-                return common.eatSpeed;
+                return common.eatSpeed * category.eatSpeedModifier;
             }
             else
             {
-                return common.hungrySpeed;
+                return common.hungrySpeed * category.hungrySpeedModifier;
             }
         }
 
