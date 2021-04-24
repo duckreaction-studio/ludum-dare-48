@@ -10,7 +10,8 @@ namespace Core
     public enum CoreGameEventType
     {
         CatStartEating = GameEventType.Other + 1,
-        CatStopEating
+        CatStopEating,
+        CatIsDead
     }
 
     public class GameState : MonoBehaviour
@@ -59,6 +60,11 @@ namespace Core
         public bool isRunning()
         {
             return state == State.Running;
+        }
+
+        public bool isStartedOrRunning()
+        {
+            return state == State.Started || state == State.Running;
         }
 
         public void Update()

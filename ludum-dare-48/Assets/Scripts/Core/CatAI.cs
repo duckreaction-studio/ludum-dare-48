@@ -8,38 +8,120 @@ using Zenject;
 
 namespace Core
 {
-    public enum CatState
+    public class CatAI : GameBehaviour, IPointerClickHandler
     {
-        Idle,
-        Eating
-    }
-    public class CatAI : MonoBehaviour, IPointerClickHandler
-    {
+        public enum State
+        {
+            Idle,
+            Eating,
+            Playing,
+            Dead
+        }
+
+        const float notHungry = 0.66f;
+        const float veryHungry = 0.33f;
+        const float fast = 2f;
+        const float normal = 1f;
+        const float slow = 2f;
+        const float verySlow = 0.1f;
+
         [SerializeField]
         float _distanceFromBowl = 0.5f;
+        [SerializeField]
+        float _defaultHungry = 0.6f;
 
         [Inject]
         CatBowl _bowl;
 
-        [Inject]
-        SignalBus _signalBus;
+        State _state = State.Idle;
 
-        CatState _state = CatState.Idle;
+        public float hungry { get; private set; }
 
-        public void Update()
+        public void OnAfterSpawn()
         {
-            if (_state == CatState.Eating)
+            hungry = _defaultHungry;
+        }
+
+        protected override void RunningUpdate()
+        {
+            UpdateStressAndHungry();
+
+            if (_state == State.Eating)
             {
                 if (!bowlIsCloseEnough())
                     StopEating();
             }
         }
 
+        private void UpdateStressAndHungry()
+        {
+            hungry += GetHungrySpeedModifier() * GetHungrySpeed() * Time.deltaTime;
+
+            hungry = Mathf.Clamp01(hungry);
+
+            if (hungry == 0)
+            {
+                _state = State.Dead;
+                _signalBus.Fire(new GameEvent(CoreGameEventType.CatIsDead, this));
+            }
+        }
+
+        private float GetHungrySpeedModifier()
+        {
+            if (_state == State.Eating)
+            {
+                if (isNotHungry())
+                    return slow;
+                else if (isVeryHungry())
+                    return fast;
+                else
+                    return normal;
+            }
+            else if (_state == State.Playing)
+            {
+                return verySlow;
+            }
+            else
+            {
+                if (isNotHungry())
+                    return fast;
+                else if (isVeryHungry())
+                    return slow;
+                else
+                    return normal;
+            }
+        }
+
+        public bool isVeryHungry()
+        {
+            return hungry < veryHungry;
+        }
+
+        public bool isNotHungry()
+        {
+            return hungry > notHungry;
+        }
+
+        private float GetHungrySpeed()
+        {
+            if (_state == State.Eating)
+            {
+                return 0.5f;
+            }
+            else
+            {
+                return -0.25f;
+            }
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (bowlIsCloseEnough())
+            if (_gameState.isStartedOrRunning())
             {
-                StartEating();
+                if (bowlIsCloseEnough())
+                {
+                    StartEating();
+                }
             }
         }
 
@@ -51,14 +133,14 @@ namespace Core
         private void StartEating()
         {
             Debug.Log("Start eating", this);
-            _state = CatState.Eating;
+            _state = State.Eating;
             _signalBus.Fire(new GameEvent(CoreGameEventType.CatStartEating, this));
         }
 
         private void StopEating()
         {
             Debug.Log("Stop eating", this);
-            _state = CatState.Idle;
+            _state = State.Idle;
             _signalBus.Fire(new GameEvent(CoreGameEventType.CatStopEating, this));
         }
     }

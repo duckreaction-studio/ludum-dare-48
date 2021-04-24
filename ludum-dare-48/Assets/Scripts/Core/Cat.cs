@@ -15,6 +15,7 @@ namespace Core
             _pool = pool;
             gameObject.name = "Cat_" + id;
             transform.position = position;
+            BroadcastMessage("OnAfterSpawn", SendMessageOptions.DontRequireReceiver);
         }
 
         public void OnDespawned()
