@@ -31,39 +31,51 @@ public class AnimatedCamera : MonoBehaviour
         }
     }
 
-    Vector3 _startPosition;
+    float _startSize;
+    float _previousAspect;
 
     void Start()
     {
-        _startPosition = currentCamera.transform.position;
+        if (!currentCamera.orthographic)
+            throw new Exception("Camera should be orthographic");
+        _startSize = currentCamera.orthographicSize;
+        _previousAspect = currentCamera.aspect;
         _spawner.catCountChanged += OnCatCountChanged;
+    }
+
+    public void Update()
+    {
+        if (currentCamera.aspect != _previousAspect)
+        {
+            _previousAspect = currentCamera.aspect;
+            UpdateCameraSize();
+        }
     }
 
     private void OnCatCountChanged(object sender, int e)
     {
+        UpdateCameraSize();
+    }
+
+    private void UpdateCameraSize()
+    {
         float maxX = _spawner.activeCatList.Select(cat => cat.transform.position.x).Max();
         maxX += _margin;
 
-        float horizontalAngle = currentCamera.GetHorizontalAngle(true);
+        float size = currentCamera.GetOrthographicSizeFromWidth(maxX * 2);
 
-        float dist = Mathf.Tan(horizontalAngle * Mathf.Deg2Rad) * maxX;
-
-        Debug.Log("Angle " + horizontalAngle + " dist " + dist);
-
-        if (dist < Mathf.Abs(_startPosition.z))
+        if (size < _startSize)
         {
-            AnimateCameraToPosition(_startPosition);
+            AnimateCameraOrthographicSize(_startSize);
         }
         else
         {
-            var pos = transform.position;
-            pos.z = _startPosition.z < 0 ? -dist : dist;
-            AnimateCameraToPosition(pos);
+            AnimateCameraOrthographicSize(size);
         }
     }
 
-    public void AnimateCameraToPosition(Vector3 pos)
+    public void AnimateCameraOrthographicSize(float size)
     {
-        transform.DOMove(pos, _animationDuration).SetEase(Ease.OutCubic);
+        currentCamera.DOOrthoSize(size, _animationDuration);
     }
 }
