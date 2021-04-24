@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1384981140431758541}
   - component: {fileID: 9038177227133501980}
   - component: {fileID: 1202913502694227746}
-  - component: {fileID: 1877235760101766917}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1877235760101766917
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 230767256547342637}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6711952019877444392
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5271257699122675944}
   - component: {fileID: 6649636255750648643}
+  - component: {fileID: 3936873717967654432}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -140,6 +127,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063616d20deb4d1478b31e86f7fe5f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3936873717967654432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711952019877444392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6cafea155c960544a8174d4bb99a6ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distanceFromBowl: 1
 --- !u!1 &7930574771515379653
 GameObject:
   m_ObjectHideFlags: 0

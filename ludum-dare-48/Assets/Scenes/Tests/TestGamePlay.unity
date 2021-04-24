@@ -546,7 +546,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _parentNewObjectsUnderSceneContext: 0
-  _contractNames: []
+  _contractNames:
+  - Game
   _parentContractNames:
   - Common
 --- !u!4 &1967996039
@@ -606,7 +607,7 @@ PrefabInstance:
     - target: {fileID: 4893111399657077705, guid: 13a476271336adb4bb40e6ad5c42af33,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.37
       objectReference: {fileID: 0}
     - target: {fileID: 4893111399657077705, guid: 13a476271336adb4bb40e6ad5c42af33,
         type: 3}

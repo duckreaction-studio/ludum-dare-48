@@ -35,10 +35,17 @@ namespace Core
 
         private void OnGameEventReceived(GameEvent gameEvent)
         {
-            if (gameEvent.type == GameEventType.LEVEL_UP)
+            if (gameEvent.type == GameEventType.LevelUp)
                 AddCats();
-            else if (gameEvent.type == GameEventType.GAME_RESET)
-                Reset();
+            else if (gameEvent.type == GameEventType.GameStateChanged)
+            {
+                switch (gameEvent.GetParam<GameState.State>())
+                {
+                    case GameState.State.Running:
+                        AddCats();
+                        break;
+                }
+            }
         }
 
         private void CreateFirstCats()
