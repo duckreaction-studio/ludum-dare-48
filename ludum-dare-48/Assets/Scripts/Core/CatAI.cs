@@ -14,6 +14,9 @@ namespace Core
         {
             Idle,
             Eating,
+            AfterEat,
+            Happy,
+            Dizzy,
             Playing,
             Dead
         }
@@ -25,6 +28,7 @@ namespace Core
         CatBowl _bowl;
 
         State _state = State.Idle;
+        float _stateChangeTime;
 
         public float hungry { get; private set; }
 
@@ -40,16 +44,41 @@ namespace Core
 
         protected override void RunningUpdate()
         {
-            UpdateStressAndHungry();
+            UpdateHungry();
 
             if (_state == State.Eating)
             {
                 if (!bowlIsCloseEnough())
-                    StopEating();
+                    SetState(State.AfterEat);
+            }
+
+            if (_state == State.Happy || _state == State.AfterEat || _state == State.Dizzy)
+            {
+                if (IsTimeout())
+                    SetState(State.Idle);
             }
         }
 
-        private void UpdateStressAndHungry()
+        private bool IsTimeout()
+        {
+            return Time.realtimeSinceStartup > _stateChangeTime + GetStateDuration();
+        }
+
+        private float GetStateDuration()
+        {
+            switch (_state)
+            {
+                case State.Happy:
+                    return common.happyDelay;
+                case State.AfterEat:
+                    return common.afterEatDelay;
+                case State.Dizzy:
+                    return common.dizzyDelay;
+            }
+            return 0f;
+        }
+
+        private void UpdateHungry()
         {
             hungry += GetHungrySpeedModifier() * GetHungrySpeed() * Time.deltaTime;
 
@@ -57,8 +86,7 @@ namespace Core
 
             if (hungry == 0)
             {
-                _state = State.Dead;
-                _signalBus.Fire(new GameEvent(CoreGameEventType.CatIsDead, this));
+                SetState(State.Dead);
             }
         }
 
@@ -77,7 +105,7 @@ namespace Core
             {
                 return common.verySlow;
             }
-            else
+            else if (_state == State.Idle)
             {
                 if (isNotHungry())
                     return common.fast;
@@ -86,6 +114,7 @@ namespace Core
                 else
                     return common.normal;
             }
+            return 0f;
         }
 
         public bool isVeryHungry()
@@ -116,7 +145,14 @@ namespace Core
             {
                 if (bowlIsCloseEnough())
                 {
-                    StartEating();
+                    SetState(State.Eating);
+                }
+                else
+                {
+                    hungry -= common.hit;
+                    UpdateHungry();
+                    if (_state != State.Dead)
+                        SetState(State.Dizzy);
                 }
             }
         }
@@ -126,18 +162,25 @@ namespace Core
             return Mathf.Abs(_bowl.transform.position.x - transform.position.x) < common.distanceFromBowl;
         }
 
-        private void StartEating()
+        private void SetState(State newState)
         {
-            Debug.Log("Start eating", this);
-            _state = State.Eating;
-            _signalBus.Fire(new GameEvent(CoreGameEventType.CatStartEating, this));
+            if (newState != _state)
+            {
+                var previousState = _state;
+                _state = newState;
+                _stateChangeTime = Time.realtimeSinceStartup;
+                FireStateChanged(previousState, newState);
+            }
         }
 
-        private void StopEating()
+        private void FireStateChanged(State previousState, State newState)
         {
-            Debug.Log("Stop eating", this);
-            _state = State.Idle;
-            _signalBus.Fire(new GameEvent(CoreGameEventType.CatStopEating, this));
+            if (previousState == State.Eating)
+                _signalBus.Fire(new GameEvent(CoreGameEventType.CatStopEating, this));
+            if (newState == State.Eating)
+                _signalBus.Fire(new GameEvent(CoreGameEventType.CatStartEating, this));
+            if (newState == State.Dead)
+                _signalBus.Fire(new GameEvent(CoreGameEventType.CatIsDead, this));
         }
     }
 }

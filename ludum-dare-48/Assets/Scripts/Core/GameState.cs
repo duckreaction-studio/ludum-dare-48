@@ -9,6 +9,7 @@ namespace Core
 {
     public enum CoreGameEventType
     {
+        CatIsIdle,
         CatStartEating = GameEventType.Other + 1,
         CatStopEating,
         CatIsDead
