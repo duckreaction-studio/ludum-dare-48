@@ -43,6 +43,9 @@ namespace Core
 
         public State state { get; private set; } = State.Init;
 
+        private State _previousState;
+        private float _stateChangeTime;
+
         [Inject]
         SignalBus _signalBus;
 
@@ -66,6 +69,17 @@ namespace Core
             {
                 SetState(State.Running);
             }
+        }
+
+        public void Pause()
+        {
+            SetState(State.Paused);
+        }
+
+        public void Resume()
+        {
+            if (state == State.Paused)
+                SetState(_previousState);
         }
 
         public bool isRunning()
@@ -97,9 +111,21 @@ namespace Core
         {
             if (newState != state)
             {
+                _previousState = state;
+                var stateDuration = Time.realtimeSinceStartup - _stateChangeTime;
                 state = newState;
+                _stateChangeTime = Time.realtimeSinceStartup;
                 _signalBus.Fire(new GameEvent(GameEventType.GameStateChanged, newState));
+                FirePauseEvent(stateDuration);
             }
+        }
+
+        private void FirePauseEvent(float stateDuration)
+        {
+            if (_previousState != State.Paused && state == State.Paused)
+                _signalBus.Fire(new GameEvent(GameEventType.GamePause));
+            if (_previousState == State.Paused && state != State.Paused)
+                _signalBus.Fire(new GameEvent(GameEventType.GameResume, stateDuration));
         }
     }
 }

@@ -26,4 +26,12 @@ public class MainUI : GameBehaviour
         _level.text = "Level " + _gameState.level;
         _score.text = _gameState.totalScore.ToString(_numberFormat);
     }
+
+    public void Pause()
+    {
+        if (_gameState.isRunning())
+            _gameState.Pause();
+        else
+            _gameState.Resume();
+    }
 }

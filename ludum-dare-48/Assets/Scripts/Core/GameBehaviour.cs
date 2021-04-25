@@ -11,6 +11,11 @@ namespace Core
         [Inject]
         protected GameState _gameState;
 
+        protected virtual void Start()
+        {
+
+        }
+
         protected virtual void Update()
         {
             if (_gameState.isRunning())

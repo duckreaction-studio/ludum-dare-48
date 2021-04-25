@@ -12,6 +12,7 @@ namespace DuckReaction.Common
         GameOver,
         GamePause,
         GameReset,
+        GameResume,
         GameStateChanged,
         LevelUp,
         LevelDown,
