@@ -939,7 +939,8 @@ MonoBehaviour:
   _scenesToUnload:
   - Scenes/Home
   _scenesToLoad:
-  - Scenes/SampleScene
+  - Scenes/Tests/TestGamePlay
+  - Scenes/UI/MainUI
 --- !u!1 &1796493396
 GameObject:
   m_ObjectHideFlags: 0

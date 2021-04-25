@@ -18,6 +18,19 @@ namespace Core
 
         public CatCategorySettings category { get; private set; }
 
+        private CatAI _ai;
+        public CatAI ai
+        {
+            get
+            {
+                if (_ai == null)
+                {
+                    _ai = GetComponent<CatAI>();
+                }
+                return _ai;
+            }
+        }
+
         public void OnSpawned(int id, Vector3 position, IMemoryPool pool)
         {
             _pool = pool;
