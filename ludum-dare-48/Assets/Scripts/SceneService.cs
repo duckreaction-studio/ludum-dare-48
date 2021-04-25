@@ -1,4 +1,5 @@
 using DG.Tweening;
+using DuckReaction.Common;
 using DuckReaction.Common.Container;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
@@ -22,12 +23,15 @@ public class SceneService : MonoBehaviour
 
     List<string> _scenesToUnload;
     List<string> _scenesToLoad;
+    bool _inTransition = false;
+    RectTransform _rect;
 
     void Start()
     {
         _targetY = Screen.height;
         _imageEffect.color = Color.black;
-        Vector2 target = ((RectTransform)_imageEffect.transform).anchoredPosition;
+        _rect = _imageEffect.GetRectTransform();
+        Vector2 target = _rect.anchoredPosition;
         target.y = _targetY;
 
         if (SceneManager.sceneCount == 1)
@@ -36,8 +40,20 @@ public class SceneService : MonoBehaviour
             TransitionEndAnimation();
     }
 
+    private void Update()
+    {
+        if (!_inTransition && _targetY != Screen.height)
+        {
+            _targetY = Screen.height;
+            var pos = _rect.anchoredPosition;
+            pos.y = _targetY;
+            _rect.anchoredPosition = pos;
+        }
+    }
+
     public void StartSceneTransition(string[] scenesToUnload, string[] scenesToLoad, bool fadeIn = true)
     {
+        _inTransition = true;
         _scenesToUnload = new List<string>(scenesToUnload);
         _scenesToLoad = new List<string>(scenesToLoad);
 
@@ -95,5 +111,6 @@ public class SceneService : MonoBehaviour
     private void OnTransitionComplete()
     {
         Debug.Log("Transition complete");
+        _inTransition = false;
     }
 }
