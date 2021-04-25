@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace Core
 {
-    public class CatBowl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class CatBowl : GameBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [ShowInInspector, ReadOnly]
         Vector3 _basePosition;
@@ -23,16 +23,20 @@ namespace Core
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            isMoving = true;
+            if (_gameState.isStartedOrRunning())
+                isMoving = true;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            Vector3 pointerWorldPosition = PointerScreenPositionToWorld(eventData);
-            Vector3 newPos = pointerWorldPosition;
-            newPos.y = _basePosition.y;
-            newPos.z = _basePosition.z;
-            transform.position = newPos;
+            if (isMoving)
+            {
+                Vector3 pointerWorldPosition = PointerScreenPositionToWorld(eventData);
+                Vector3 newPos = pointerWorldPosition;
+                newPos.y = _basePosition.y;
+                newPos.z = _basePosition.z;
+                transform.position = newPos;
+            }
         }
 
         private Vector3 PointerScreenPositionToWorld(PointerEventData eventData)

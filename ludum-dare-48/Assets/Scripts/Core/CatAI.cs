@@ -98,6 +98,11 @@ namespace Core
                 SetState(State.Idle);
         }
 
+        protected override void OnGameResume(float pauseDuration)
+        {
+            _stateChangeTime += pauseDuration;
+        }
+
         public void RestartHappy()
         {
             if (IsHappy())

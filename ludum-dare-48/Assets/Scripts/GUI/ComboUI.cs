@@ -49,13 +49,10 @@ namespace GUI
             GoToStartPosition();
         }
 
-        void Start()
+        protected override void OnGameEventReceived(GameEvent ge)
         {
-            _signalBus.Subscribe<GameEvent>(OnGameEventReceived);
-        }
+            base.OnGameEventReceived(ge);
 
-        private void OnGameEventReceived(GameEvent ge)
-        {
             if (ge.Is(CoreGameEventType.StartCombo))
             {
                 UpdateComboMessage(ge.GetParam<int>());

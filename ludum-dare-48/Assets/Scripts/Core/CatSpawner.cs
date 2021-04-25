@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Core
 {
-    public class CatSpawner : MonoBehaviour
+    public class CatSpawner : GameBehaviour
     {
         [SerializeField]
         int _startCount = 1;
@@ -20,32 +20,21 @@ namespace Core
 
         [Inject]
         Cat.Factory _factory;
-        [Inject]
-        SignalBus _signalBus;
 
         public List<Cat> activeCatList { get; private set; } = new List<Cat>();
 
         public event EventHandler<int> catCountChanged;
 
-        public void Start()
+        protected override void Start()
         {
             CreateFirstCats();
-            _signalBus.Subscribe<GameEvent>(OnGameEventReceived);
+            base.Start();
         }
 
-        private void OnGameEventReceived(GameEvent gameEvent)
+        protected override void OnGameEventReceived(GameEvent gameEvent)
         {
-            if (gameEvent.type == GameEventType.LevelUp)
+            if (gameEvent.type == GameEventType.LevelUp || gameEvent.type == GameEventType.GameStart)
                 AddCats();
-            else if (gameEvent.type == GameEventType.GameStateChanged)
-            {
-                switch (gameEvent.GetParam<GameState.State>())
-                {
-                    case GameState.State.Running:
-                        AddCats();
-                        break;
-                }
-            }
         }
 
         private void CreateFirstCats()
