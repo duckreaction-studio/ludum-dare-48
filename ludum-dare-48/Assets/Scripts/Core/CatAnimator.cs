@@ -81,6 +81,11 @@ namespace Core
             animator.SetTrigger("NoBowl");
         }
 
+        public void OnSpamSmash()
+        {
+            OnCatSmashed();
+        }
+
         [ContextMenu("OnCatEating")]
         public void OnCatEating()
         {

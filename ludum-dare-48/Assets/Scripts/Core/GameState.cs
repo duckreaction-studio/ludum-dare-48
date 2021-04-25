@@ -20,7 +20,8 @@ namespace Core
         CatIsDead,
         StartCombo,
         StopCombo,
-        Meow
+        Meow,
+        SpamSmash
     }
 
     public class GameState : MonoBehaviour

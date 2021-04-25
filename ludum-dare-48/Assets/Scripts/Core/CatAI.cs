@@ -217,9 +217,22 @@ namespace Core
                 }
                 else
                 {
-                    SetState(State.Dizzy);
+                    if (_state == State.Dizzy)
+                    {
+                        SpamSmash();
+                    }
+                    else
+                    {
+                        SetState(State.Dizzy);
+                    }
                 }
             }
+        }
+
+        private void SpamSmash()
+        {
+            BroadcastMessage("OnSpamSmash", SendMessageOptions.DontRequireReceiver);
+            _signalBus.Fire(new GameEvent(CoreGameEventType.SpamSmash, this));
         }
 
         private bool bowlIsCloseEnough()
