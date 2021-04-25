@@ -26,20 +26,33 @@ namespace Core
         void Update()
         {
             Vector3 center = transform.position + _centerOffset;
+            Vector3 mouseWorldPos = GetMouseWorldPosition(center.z);
 
-            Vector3 mousePos = Mouse.current.position.ReadValue();
-            mousePos.z = center.z - _currentCamera.transform.position.z;
-            var mouseWorldPos = _currentCamera.ScreenToWorldPoint(mousePos);
-
-            if ((center - mouseWorldPos).sqrMagnitude < sqrMaxDistance)
+            if (IsMouseCloseEnough(center, mouseWorldPos))
             {
-                Debug.Log("Mouse detected");
-                if ((_previousMouseWorldPosition - mouseWorldPos).sqrMagnitude > sqrMouveDetection)
+                if (IsMouseMovingEnough(mouseWorldPos))
                 {
-                    Debug.Log("Mouse is moving");
                     _previousMouseWorldPosition = mouseWorldPos;
                 }
             }
+        }
+
+        private bool IsMouseMovingEnough(Vector3 mouseWorldPos)
+        {
+            return (_previousMouseWorldPosition - mouseWorldPos).sqrMagnitude > sqrMouveDetection;
+        }
+
+        private bool IsMouseCloseEnough(Vector3 center, Vector3 mouseWorldPos)
+        {
+            return (center - mouseWorldPos).sqrMagnitude < sqrMaxDistance;
+        }
+
+        private Vector3 GetMouseWorldPosition(float zRef)
+        {
+            Vector3 mousePos = Mouse.current.position.ReadValue();
+            mousePos.z = zRef - _currentCamera.transform.position.z;
+            var mouseWorldPos = _currentCamera.ScreenToWorldPoint(mousePos);
+            return mouseWorldPos;
         }
     }
 }
