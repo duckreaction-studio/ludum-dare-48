@@ -107,23 +107,27 @@ namespace Core
         public void OnCatHungry()
         {
             animator.ResetTrigger("FullFed");
+            animator.ResetTrigger("FullFed");
         }
 
         [ContextMenu("OnCatAfterEat")]
         public void OnCatAfterEat()
         {
+            animator.ResetTrigger("FullFed");
             animator.SetTrigger("NoBowl");
         }
 
         [ContextMenu("OnCatIdleAfterDizzy")]
         public void OnCatIdleAfterDizzy()
         {
+            animator.ResetTrigger("FullFed");
             animator.SetTrigger("Angry");
         }
 
         [ContextMenu("OnCatIdle")]
         public void OnCatIdle()
         {
+            animator.ResetTrigger("FullFed");
             animator.ResetTrigger("Angry");
             animator.SetTrigger("NoBowl");
         }

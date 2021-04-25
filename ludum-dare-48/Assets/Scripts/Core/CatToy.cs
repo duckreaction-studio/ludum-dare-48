@@ -1,6 +1,9 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 namespace Core
@@ -13,10 +16,19 @@ namespace Core
         Vector3 _centerOffset = new Vector3(0, 2.5f);
         [SerializeField]
         float sqrMouveDetection = 0.8f;
+        [SerializeField]
+        Rig _rig;
+        [SerializeField]
+        Transform _target;
+        [SerializeField]
+        Vector3 _targetOffset = new Vector3(0, 0, -3f);
+        [SerializeField]
+        float _rigAnimationDuration = 0.5f;
 
         Camera _currentCamera;
 
         Vector3 _previousMouseWorldPosition;
+        float _rigWeight;
 
         CatAI _ai;
         CatAI ai
@@ -40,14 +52,29 @@ namespace Core
         {
             Vector3 center = transform.position + _centerOffset;
             Vector3 mouseWorldPos = GetMouseWorldPosition(center.z);
+            _target.position = mouseWorldPos + _targetOffset;
 
             if (IsMouseCloseEnough(center, mouseWorldPos))
             {
+                AnimateRigWeight(1);
                 if (IsMouseMovingEnough(mouseWorldPos))
                 {
                     _previousMouseWorldPosition = mouseWorldPos;
                     ai.MouseIsDetected();
                 }
+            }
+            else
+            {
+                AnimateRigWeight(0);
+            }
+        }
+
+        private void AnimateRigWeight(int newRigWeight)
+        {
+            if (_rigWeight != newRigWeight)
+            {
+                _rigWeight = newRigWeight;
+                DOTween.To(() => _rig.weight, x => _rig.weight = x, _rigWeight, _rigAnimationDuration);
             }
         }
 
