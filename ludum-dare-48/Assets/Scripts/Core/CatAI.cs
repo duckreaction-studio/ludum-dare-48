@@ -253,6 +253,8 @@ namespace Core
                 BroadcastMessage("OnCatHappy", SendMessageOptions.DontRequireReceiver);
             else if (newState == State.AfterEat)
                 BroadcastMessage("OnCatAfterEat", SendMessageOptions.DontRequireReceiver);
+            else if (previousState == State.Dizzy && newState == State.Idle)
+                BroadcastMessage("OnCatIdleAfterDizzy", SendMessageOptions.DontRequireReceiver);
             else if (newState == State.Idle)
                 BroadcastMessage("OnCatIdle", SendMessageOptions.DontRequireReceiver);
         }

@@ -56,8 +56,6 @@ namespace Core
             }
         }
 
-        bool isDizzy = false;
-
         protected override void Start()
         {
             base.Start();
@@ -80,39 +78,48 @@ namespace Core
             animator.ResetTrigger("FullFed");
             animator.SetTrigger("Smash");
             animator.SetTrigger("NoBowl");
-            isDizzy = true;
         }
 
-        [ContextMenu("Test smash on bowl")]
+        [ContextMenu("OnCatEating")]
         public void OnCatEating()
         {
+            animator.ResetTrigger("NoBowl");
+            animator.ResetTrigger("Angry");
             animator.SetTrigger("Fed");
             animator.SetTrigger("Smash");
         }
 
+        [ContextMenu("OnCatHappy")]
         public void OnCatHappy()
         {
             animator.SetTrigger("Fed");
             animator.SetTrigger("FullFed");
+            animator.SetTrigger("NoBowl");
         }
 
+        [ContextMenu("OnCatHungry")]
         public void OnCatHungry()
         {
             animator.ResetTrigger("FullFed");
         }
 
+        [ContextMenu("OnCatAfterEat")]
         public void OnCatAfterEat()
         {
             animator.SetTrigger("NoBowl");
         }
 
+        [ContextMenu("OnCatIdleAfterDizzy")]
+        public void OnCatIdleAfterDizzy()
+        {
+            animator.SetTrigger("Angry");
+        }
+
+        [ContextMenu("OnCatIdle")]
         public void OnCatIdle()
         {
-            if (isDizzy)
-                animator.SetTrigger("Angry");
-            else
-                animator.SetTrigger("NoBowl");
-            isDizzy = false;
+            animator.ResetTrigger("Angry");
+            animator.SetTrigger("NoBowl");
         }
 
         private void UpdateRandomRange(RandomRange range, string trigger)
