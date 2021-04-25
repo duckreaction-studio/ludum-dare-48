@@ -13,6 +13,7 @@ namespace Core
         CatIsIdle,
         CatStartEating,
         CatStopEating,
+        CatStartDizzy,
         CatIsPlaying,
         CatIsHappy,
         HitHappyCat,

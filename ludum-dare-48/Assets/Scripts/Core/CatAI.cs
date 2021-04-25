@@ -263,6 +263,7 @@ namespace Core
         new Dictionary<State, CoreGameEventType>()
         {
             { State.Eating, CoreGameEventType.CatStartEating },
+            { State.Dizzy, CoreGameEventType.CatStartDizzy },
             { State.Playing, CoreGameEventType.CatIsPlaying },
             { State.Happy, CoreGameEventType.CatIsHappy },
             { State.Dead, CoreGameEventType.CatIsDead }
