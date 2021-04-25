@@ -229,25 +229,32 @@ namespace Core
 
         private void SetState(State newState, bool forceRestartTimer = false)
         {
-            if (_state == State.Happy && newState != State.Happy)
-            {
-                Debug.Log("Cat is no more happy");
-            }
-            else if (_state != State.Happy && newState == State.Happy)
-            {
-                Debug.Log("Cat is happy");
-            }
             if (newState != _state)
             {
                 var previousState = _state;
                 _state = newState;
                 _stateChangeTime = Time.realtimeSinceStartup;
                 FireStateChanged(previousState, newState);
+                FireMessage(previousState, newState);
             }
             else if (forceRestartTimer)
             {
                 _stateChangeTime = Time.realtimeSinceStartup;
             }
+        }
+
+        private void FireMessage(State previousState, State newState)
+        {
+            if (newState == State.Eating)
+                BroadcastMessage("OnCatEating", SendMessageOptions.DontRequireReceiver);
+            else if (newState == State.Dizzy)
+                BroadcastMessage("OnCatSmashed", SendMessageOptions.DontRequireReceiver);
+            else if (newState == State.Happy)
+                BroadcastMessage("OnCatHappy", SendMessageOptions.DontRequireReceiver);
+            else if (newState == State.AfterEat)
+                BroadcastMessage("OnCatAfterEat", SendMessageOptions.DontRequireReceiver);
+            else if (newState == State.Idle)
+                BroadcastMessage("OnCatIdle", SendMessageOptions.DontRequireReceiver);
         }
 
         public static readonly Dictionary<State, CoreGameEventType> mapStateEvent =
