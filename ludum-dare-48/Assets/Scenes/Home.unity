@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 1.0109869, g: 0.5300704, b: 0.116931915, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -865,7 +865,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2f72f66168ddfdd4bab11d7a85c81183,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2f72f66168ddfdd4bab11d7a85c81183,
         type: 3}
@@ -952,7 +952,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412416587}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1797131844}
@@ -1020,13 +1020,13 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 6055233739157037472}
+  m_TargetGraphic: {fileID: 1412416591}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 356415393}
-        m_TargetAssemblyTypeName: GUI.AnimatedPanel, Assembly-CSharp
-        m_MethodName: Hide
+        m_TargetAssemblyTypeName: GUI.AnimatedPanel, Game
+        m_MethodName: Show
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1102,7 +1102,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432289884}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 236514413}
@@ -1154,13 +1154,13 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 6055233739157037472}
+  m_TargetGraphic: {fileID: 1432289887}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 356415393}
-        m_TargetAssemblyTypeName: GUI.AnimatedPanel, Assembly-CSharp
-        m_MethodName: Hide
+      - m_Target: {fileID: 1432289889}
+        m_TargetAssemblyTypeName: GUI.LoadSceneButton, Game
+        m_MethodName: LoadScenes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1608,15 +1608,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 389bbc36defd16c41915ba5816467889, type: 3}
---- !u!114 &6055233739157037472 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6055233738593702723, guid: 389bbc36defd16c41915ba5816467889,
-    type: 3}
-  m_PrefabInstance: {fileID: 6055233739157037471}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
