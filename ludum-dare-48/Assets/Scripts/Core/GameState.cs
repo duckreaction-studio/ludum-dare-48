@@ -19,7 +19,8 @@ namespace Core
         HitHappyCat,
         CatIsDead,
         StartCombo,
-        StopCombo
+        StopCombo,
+        Meow
     }
 
     public class GameState : MonoBehaviour
@@ -82,9 +83,15 @@ namespace Core
             }
             else if (isRunning() && gameEvent.Is(CoreGameEventType.CatIsDead))
             {
-                SetState(State.GameOver);
-                _signalBus.Fire(new GameEvent(GameEventType.GameOver));
+                GameOver();
             }
+        }
+
+        [ContextMenu("Test Game Over")]
+        private void GameOver()
+        {
+            SetState(State.GameOver);
+            _signalBus.Fire(new GameEvent(GameEventType.GameOver));
         }
 
         public void Pause()

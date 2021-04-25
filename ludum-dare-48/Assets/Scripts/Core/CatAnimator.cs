@@ -1,3 +1,4 @@
+using DuckReaction.Common;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -71,7 +72,7 @@ namespace Core
             UpdateRandomRange(_meowDelay, "Meow");
         }
 
-        [ContextMenu("Test smash")]
+        [ContextMenu("OnCatSmashed")]
         public void OnCatSmashed()
         {
             animator.ResetTrigger("Fed");
@@ -128,6 +129,8 @@ namespace Core
             {
                 range.Next();
                 animator.SetTrigger(trigger);
+                if (trigger == "Meow")
+                    _signalBus.Fire(new GameEvent(CoreGameEventType.Meow));
             }
             else
             {

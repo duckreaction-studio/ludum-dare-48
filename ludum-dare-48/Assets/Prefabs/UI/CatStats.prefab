@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 309134675348847673}
   - component: {fileID: 2625810369246884934}
   - component: {fileID: 8047882828452392655}
+  - component: {fileID: 269012757600672437}
   m_Layer: 5
   m_Name: CatStats
   m_TagString: Untagged
@@ -247,3 +248,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 4573086818554215023}
+--- !u!114 &269012757600672437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8899016709950866189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3f209a069187241aff616d08751d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
