@@ -51,5 +51,10 @@ namespace Core
         {
             isMoving = false;
         }
+
+        protected override void OnGameReset()
+        {
+            transform.position = _basePosition;
+        }
     }
 }

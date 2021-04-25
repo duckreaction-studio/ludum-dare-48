@@ -35,6 +35,17 @@ namespace Core
         {
             if (gameEvent.type == GameEventType.LevelUp || gameEvent.type == GameEventType.GameStart)
                 AddCats();
+            if (gameEvent.type == GameEventType.GameReset)
+            {
+                GameReset();
+            }
+        }
+
+        private void GameReset()
+        {
+            DestroyAllCats();
+            _lastId = 0;
+            CreateFirstCats();
         }
 
         private void CreateFirstCats()

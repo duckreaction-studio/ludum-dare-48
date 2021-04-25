@@ -63,6 +63,15 @@ namespace Core
             SetState(State.Started);
         }
 
+        public void Restart()
+        {
+            _score = 0;
+            bonusScore = 0;
+            level = 1;
+            _signalBus.Fire(new GameEvent(GameEventType.GameReset));
+            SetState(State.Started);
+        }
+
         private void OnGameEventReceived(GameEvent gameEvent)
         {
             if (state == State.Started && gameEvent.Is(CoreGameEventType.CatStartEating))

@@ -1,5 +1,6 @@
 using Core;
 using DuckReaction.Common;
+using GUI;
 using System;
 using System.Globalization;
 using TMPro;
@@ -11,6 +12,8 @@ public class MainUI : GameBehaviour
     TMP_Text _level;
     [SerializeField]
     TMP_Text _score;
+    [SerializeField]
+    AnimatedPanel _animatedPanel;
 
     NumberFormatInfo _numberFormat;
 
@@ -31,9 +34,36 @@ public class MainUI : GameBehaviour
 
     public void Pause()
     {
-        if (_gameState.isRunning())
-            _gameState.Pause();
+        if (_gameState.isStartedOrRunning())
+            PauseInner();
         else
-            _gameState.Resume();
+            Resume();
+    }
+
+    public void Resume()
+    {
+        _animatedPanel.Hide();
+        _gameState.Resume();
+    }
+
+    private void PauseInner()
+    {
+        _animatedPanel.Show();
+        _gameState.Pause();
+    }
+
+    public void Restart()
+    {
+        _animatedPanel.Hide();
+        _gameState.Restart();
+    }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

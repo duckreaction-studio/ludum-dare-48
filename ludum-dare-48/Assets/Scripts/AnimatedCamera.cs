@@ -59,18 +59,21 @@ public class AnimatedCamera : MonoBehaviour
 
     private void UpdateCameraSize()
     {
-        float maxX = _spawner.activeCatList.Select(cat => cat.transform.position.x).Max();
-        maxX += _margin;
-
-        float size = currentCamera.GetOrthographicSizeFromWidth(maxX * 2);
-
-        if (size < _startSize)
+        if (_spawner.activeCatList != null && _spawner.activeCatList.Count > 0)
         {
-            AnimateCameraOrthographicSize(_startSize);
-        }
-        else
-        {
-            AnimateCameraOrthographicSize(size);
+            float maxX = _spawner.activeCatList.Select(cat => cat.transform.position.x).Max();
+            maxX += _margin;
+
+            float size = currentCamera.GetOrthographicSizeFromWidth(maxX * 2);
+
+            if (size < _startSize)
+            {
+                AnimateCameraOrthographicSize(_startSize);
+            }
+            else
+            {
+                AnimateCameraOrthographicSize(size);
+            }
         }
     }
 
