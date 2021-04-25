@@ -28,7 +28,7 @@ namespace DuckReaction.Audio
 
         private void OnGameEventReceived(GameEvent e)
         {
-            ProcessEvent(e.type.ToString("g").ToLowerInvariant());
+            ProcessEvent(e.typeAsString);
         }
 
         private void ProcessEvent(string eventName)

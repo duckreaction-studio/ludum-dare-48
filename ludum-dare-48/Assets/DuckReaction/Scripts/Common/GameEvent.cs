@@ -22,6 +22,7 @@ namespace DuckReaction.Common
     public class GameEvent
     {
         protected int _type;
+        public string typeAsString { get; protected set; }
         public GameEventType type
         {
             get
@@ -33,6 +34,7 @@ namespace DuckReaction.Common
 
         public GameEvent(Enum type, object param = null)
         {
+            typeAsString = type.ToString("g");
             _type = (int)((object)type);
             this.param = param;
         }
