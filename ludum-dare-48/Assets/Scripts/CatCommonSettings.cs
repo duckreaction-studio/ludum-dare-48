@@ -23,6 +23,7 @@ public class CatCommonSettings
     public float happyDelay = 8f;
     public float afterEatDelay = 4f;
     public float dizzyDelay = 6f;
+    public float playingDelay = 0.5f;
 
     [TitleGroup("Speed modifiers")]
     public float fast = 2f;

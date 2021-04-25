@@ -60,6 +60,14 @@ namespace Core
             hungry = common.initHungry;
         }
 
+        public void MouseIsDetected()
+        {
+            if (_state == State.Idle || _state == State.Playing)
+            {
+                SetState(State.Playing, true);
+            }
+        }
+
         protected override void RunningUpdate()
         {
             UpdateHungry();
@@ -70,7 +78,7 @@ namespace Core
                     SetState(State.AfterEat);
             }
 
-            if (_state == State.Happy || _state == State.AfterEat || _state == State.Dizzy)
+            if (_state == State.Happy || _state == State.AfterEat || _state == State.Dizzy || _state == State.Playing)
             {
                 if (IsTimeout())
                 {
@@ -105,6 +113,8 @@ namespace Core
                     return common.afterEatDelay;
                 case State.Dizzy:
                     return common.dizzyDelay;
+                case State.Playing:
+                    return common.playingDelay;
             }
             return 0f;
         }
@@ -190,7 +200,7 @@ namespace Core
             return Mathf.Abs(_bowl.transform.position.x - transform.position.x) < common.distanceFromBowl;
         }
 
-        private void SetState(State newState)
+        private void SetState(State newState, bool forceRestartTimer = false)
         {
             if (newState != _state)
             {
@@ -198,6 +208,10 @@ namespace Core
                 _state = newState;
                 _stateChangeTime = Time.realtimeSinceStartup;
                 FireStateChanged(previousState, newState);
+            }
+            else if (forceRestartTimer)
+            {
+                _stateChangeTime = Time.realtimeSinceStartup;
             }
         }
 
@@ -207,6 +221,8 @@ namespace Core
                 _signalBus.Fire(new GameEvent(CoreGameEventType.CatStopEating, this));
             if (newState == State.Eating)
                 _signalBus.Fire(new GameEvent(CoreGameEventType.CatStartEating, this));
+            if (newState == State.Playing)
+                _signalBus.Fire(new GameEvent(CoreGameEventType.CatIsPlaying, this));
             if (newState == State.Dead)
                 _signalBus.Fire(new GameEvent(CoreGameEventType.CatIsDead, this));
         }

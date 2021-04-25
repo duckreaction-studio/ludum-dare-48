@@ -8,20 +8,33 @@ namespace Core
     public class CatToy : MonoBehaviour
     {
         [SerializeField]
-        private float sqrMaxDistance = 4f;
+        float sqrMaxDistance = 4f;
         [SerializeField]
-        private Vector3 _centerOffset = new Vector3(0, 2.5f);
+        Vector3 _centerOffset = new Vector3(0, 2.5f);
         [SerializeField]
-        private float sqrMouveDetection = 0.8f;
+        float sqrMouveDetection = 0.8f;
 
         Camera _currentCamera;
+
+        Vector3 _previousMouseWorldPosition;
+
+        CatAI _ai;
+        CatAI ai
+        {
+            get
+            {
+                if (_ai == null)
+                {
+                    _ai = GetComponent<CatAI>();
+                }
+                return _ai;
+            }
+        }
 
         public void Start()
         {
             _currentCamera = Camera.main;
         }
-
-        Vector3 _previousMouseWorldPosition;
 
         void Update()
         {
@@ -33,6 +46,7 @@ namespace Core
                 if (IsMouseMovingEnough(mouseWorldPos))
                 {
                     _previousMouseWorldPosition = mouseWorldPos;
+                    ai.MouseIsDetected();
                 }
             }
         }

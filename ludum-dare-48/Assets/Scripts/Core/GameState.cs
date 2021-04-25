@@ -12,6 +12,7 @@ namespace Core
         CatIsIdle,
         CatStartEating = GameEventType.Other + 1,
         CatStopEating,
+        CatIsPlaying,
         CatIsDead
     }
 
