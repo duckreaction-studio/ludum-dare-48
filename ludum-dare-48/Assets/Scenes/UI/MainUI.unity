@@ -2440,7 +2440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f4607d04ad0e8c469c5fd6b5a58880f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _xOffet: 1000
+  _xOffet: 1500
   _appearDuration: 0.3
   _shakeDuration: 1
   _shakeStrength: 50
