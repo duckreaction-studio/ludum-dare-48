@@ -939,7 +939,7 @@ MonoBehaviour:
   _scenesToUnload:
   - Scenes/Home
   _scenesToLoad:
-  - Scenes/Tests/TestGamePlay
+  - Scenes/MainScene
   - Scenes/UI/MainUI
 --- !u!1 &1796493396
 GameObject:
