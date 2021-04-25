@@ -26,11 +26,6 @@ namespace Core
             get => _projectSettings.scoreSettings;
         }
 
-        public void Start()
-        {
-            _signalBus.Subscribe<GameEvent>(OnGameEventReceived);
-        }
-
         protected override void RunningUpdate()
         {
             if (ComboIsRunning() && Time.realtimeSinceStartup > (_comboStart + scoreSettings.comboDuration))
@@ -44,8 +39,10 @@ namespace Core
             return _previousHappyCatCount > 0;
         }
 
-        private void OnGameEventReceived(GameEvent ge)
+        protected override void OnGameEventReceived(GameEvent ge)
         {
+            base.OnGameEventReceived(ge);
+
             if (ge.Is(CoreGameEventType.CatIsHappy))
             {
                 var happyCatCount = GetHappyCats().Count();
@@ -63,6 +60,11 @@ namespace Core
                 }
                 StopCombo();
             }
+        }
+
+        protected override void OnGameResume(float pauseDuration)
+        {
+            _comboStart += pauseDuration;
         }
 
         private IEnumerable<Cat> GetHappyCats()

@@ -14,8 +14,10 @@ public class MainUI : GameBehaviour
 
     NumberFormatInfo _numberFormat;
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
+
         _numberFormat = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
         _numberFormat.NumberGroupSeparator = " ";
     }

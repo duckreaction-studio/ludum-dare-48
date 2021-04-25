@@ -68,6 +68,7 @@ namespace Core
             if (state == State.Started && gameEvent.Is(CoreGameEventType.CatStartEating))
             {
                 SetState(State.Running);
+                _signalBus.Fire(new GameEvent(GameEventType.GameStart));
             }
         }
 
