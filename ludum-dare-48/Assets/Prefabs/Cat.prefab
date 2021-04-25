@@ -328,6 +328,7 @@ MonoBehaviour:
   _rig: {fileID: 1154443128665976825}
   _target: {fileID: 4556745910558712650}
   _targetOffset: {x: 0, y: 0, z: -3}
+  _rigAnimationDuration: 0.5
 --- !u!114 &1615420986302621774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,8 +531,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.0109082
-  m_Height: 4.0537605
+  m_Radius: 1.25
+  m_Height: 4.45
   m_Direction: 1
   m_Center: {x: 0, y: 0.99905014, z: 0}
 --- !u!114 &7061877489350704877
