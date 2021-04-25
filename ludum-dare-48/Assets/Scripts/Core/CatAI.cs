@@ -98,6 +98,18 @@ namespace Core
                 SetState(State.Idle);
         }
 
+        public void RestartHappy()
+        {
+            if (IsHappy())
+                SetState(State.Happy, true);
+        }
+
+        public void StopHappy()
+        {
+            hungry -= 0.01f;
+            SetState(State.Idle);
+        }
+
         private bool IsTimeout()
         {
             return Time.realtimeSinceStartup > _stateChangeTime + GetStateDuration();
@@ -121,6 +133,7 @@ namespace Core
 
         private void UpdateHungry()
         {
+            var previous = hungry;
             hungry += GetHungrySpeedModifier() * GetHungrySpeed() * Time.deltaTime;
 
             hungry = Mathf.Clamp01(hungry);
@@ -128,6 +141,10 @@ namespace Core
             if (hungry == 0)
             {
                 SetState(State.Dead);
+            }
+            if (hungry == 1)
+            {
+                SetState(State.Happy);
             }
         }
 
@@ -156,6 +173,11 @@ namespace Core
                     return common.normal;
             }
             return 0f;
+        }
+
+        public bool IsHappy()
+        {
+            return _state == State.Happy;
         }
 
         public bool isVeryHungry()
@@ -202,6 +224,14 @@ namespace Core
 
         private void SetState(State newState, bool forceRestartTimer = false)
         {
+            if (_state == State.Happy && newState != State.Happy)
+            {
+                Debug.Log("Cat is no more happy");
+            }
+            else if (_state != State.Happy && newState == State.Happy)
+            {
+                Debug.Log("Cat is happy");
+            }
             if (newState != _state)
             {
                 var previousState = _state;
@@ -215,16 +245,28 @@ namespace Core
             }
         }
 
+        public static readonly Dictionary<State, CoreGameEventType> mapStateEvent =
+        new Dictionary<State, CoreGameEventType>()
+        {
+            { State.Eating, CoreGameEventType.CatStartEating },
+            { State.Playing, CoreGameEventType.CatIsPlaying },
+            { State.Happy, CoreGameEventType.CatIsHappy },
+            { State.Dead, CoreGameEventType.CatIsDead }
+        };
+
         private void FireStateChanged(State previousState, State newState)
         {
             if (previousState == State.Eating)
                 _signalBus.Fire(new GameEvent(CoreGameEventType.CatStopEating, this));
-            if (newState == State.Eating)
-                _signalBus.Fire(new GameEvent(CoreGameEventType.CatStartEating, this));
-            if (newState == State.Playing)
-                _signalBus.Fire(new GameEvent(CoreGameEventType.CatIsPlaying, this));
-            if (newState == State.Dead)
-                _signalBus.Fire(new GameEvent(CoreGameEventType.CatIsDead, this));
+
+            if (previousState == State.Happy && newState == State.Dizzy)
+                _signalBus.Fire(new GameEvent(CoreGameEventType.HitHappyCat, this));
+
+            CoreGameEventType eventType;
+            if (mapStateEvent.TryGetValue(newState, out eventType))
+            {
+                _signalBus.Fire(new GameEvent(eventType, this));
+            }
         }
     }
 }

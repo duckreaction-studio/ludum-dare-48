@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b0b9859fe83af428f5fcbb11b964f8, type: 3}
   m_Name: ProjectSettings
   m_EditorClassIdentifier: 
+  scoreSettings:
+    scorePerSecond: 100
+    scorePerCombo: 1000
+    scoreToChangeLevel: 1000
+    comboDuration: 8
   catCommonSettings:
     eatSpeed: 0.3
     hungrySpeed: -0.05
@@ -20,10 +25,11 @@ MonoBehaviour:
     happyDelay: 8
     afterEatDelay: 4
     dizzyDelay: 6
+    playingDelay: 0.5
     fast: 2
     normal: 1
     slow: 0.5
-    verySlow: 0.1
+    verySlow: 0.01
     distanceFromBowl: 1
     initHungry: 0.6
     hit: 0.4

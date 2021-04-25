@@ -9,11 +9,16 @@ namespace Core
 {
     public enum CoreGameEventType
     {
+        None = GameEventType.Other + 1,
         CatIsIdle,
-        CatStartEating = GameEventType.Other + 1,
+        CatStartEating,
         CatStopEating,
         CatIsPlaying,
-        CatIsDead
+        CatIsHappy,
+        HitHappyCat,
+        CatIsDead,
+        StartCombo,
+        StopCombo
     }
 
     public class GameState : MonoBehaviour
@@ -27,14 +32,12 @@ namespace Core
             GameOver
         }
 
-        [SerializeField]
-        int _scorePerSecond = 100;
-
-        [SerializeField]
-        int _scoreToChangeLevel = 1000;
-
         float _score = 0;
         public int score { get => (int)_score; }
+
+        public int totalScore { get => score + bonusScore; }
+
+        public int bonusScore { get; set; } = 0;
 
         public int level { get; private set; } = 1;
 
@@ -43,9 +46,15 @@ namespace Core
         [Inject]
         SignalBus _signalBus;
 
+        [Inject]
+        ProjectSettings _projectSettings;
+
+        public ScoreSettings scoreSettings { get => _projectSettings.scoreSettings; }
+
         public void Start()
         {
             _score = 0;
+            bonusScore = 0;
             level = 1;
             _signalBus.Subscribe<GameEvent>(OnGameEventReceived);
             SetState(State.Started);
@@ -73,8 +82,8 @@ namespace Core
         {
             if (isRunning())
             {
-                _score += Time.deltaTime * _scorePerSecond;
-                int newLevel = (int)(_score / _scoreToChangeLevel) + 1;
+                _score += Time.deltaTime * scoreSettings.scorePerSecond;
+                int newLevel = totalScore / scoreSettings.scoreToChangeLevel + 1;
                 if (newLevel > level)
                 {
                     level = newLevel;

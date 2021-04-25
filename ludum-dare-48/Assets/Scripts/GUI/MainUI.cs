@@ -8,6 +8,8 @@ using UnityEngine;
 public class MainUI : GameBehaviour
 {
     [SerializeField]
+    TMP_Text _level;
+    [SerializeField]
     TMP_Text _score;
 
     NumberFormatInfo _numberFormat;
@@ -21,6 +23,7 @@ public class MainUI : GameBehaviour
     protected override void Update()
     {
         base.Update();
-        _score.text = _gameState.score.ToString(_numberFormat);
+        _level.text = "Level " + _gameState.level;
+        _score.text = _gameState.totalScore.ToString(_numberFormat);
     }
 }
