@@ -80,6 +80,11 @@ namespace Core
                 SetState(State.Running);
                 _signalBus.Fire(new GameEvent(GameEventType.GameStart));
             }
+            else if (isRunning() && gameEvent.Is(CoreGameEventType.CatIsDead))
+            {
+                SetState(State.GameOver);
+                _signalBus.Fire(new GameEvent(GameEventType.GameOver));
+            }
         }
 
         public void Pause()

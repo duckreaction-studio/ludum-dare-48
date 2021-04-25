@@ -24,6 +24,8 @@ namespace Core
                 OnGamePause();
             else if (ge.type == GameEventType.GameResume)
                 OnGameResume(ge.GetParam<float>());
+            else if (ge.type == GameEventType.GameOver)
+                OnGameOver();
             else if (ge.type == GameEventType.GameReset)
                 OnGameReset();
         }
@@ -35,6 +37,10 @@ namespace Core
         protected virtual void OnGameResume(float pauseDuration)
         {
 
+        }
+
+        protected virtual void OnGameOver()
+        {
         }
 
         protected virtual void OnGameReset()
