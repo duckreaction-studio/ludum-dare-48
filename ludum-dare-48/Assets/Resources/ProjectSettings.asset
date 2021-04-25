@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ProjectSettings
   m_EditorClassIdentifier: 
   scoreSettings:
-    scorePerSecond: 100
-    scorePerCombo: 1000
+    scorePerSecond: 60
+    scorePerCombo: 1500
     scoreToChangeLevel: 3000
     comboDuration: 8
   catCommonSettings:
