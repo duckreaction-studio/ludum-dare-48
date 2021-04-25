@@ -1,0 +1,5 @@
+<linker>
+  <assembly fullname="Zenject" preserve="all"/>
+  <assembly fullname="Zenject-usage" preserve="all"/>
+  <assembly fullname="Game" preserve="all"/>
+</linker>

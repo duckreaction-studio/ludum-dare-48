@@ -1,4 +1,5 @@
 using Core;
+using ModestTree.Util;
 using UnityEngine;
 using Zenject;
 
@@ -7,6 +8,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     GameObject _catPrefab;
 
+    [Preserve]
     public override void InstallBindings()
     {
         Container.Bind<ProjectSettings>().FromScriptableObjectResource("ProjectSettings").AsSingle();
