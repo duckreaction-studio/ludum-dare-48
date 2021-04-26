@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67bfb7f4dd413cc4e93db2f0f923fb7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _splashEffect: {fileID: 1430122101403124414}
 --- !u!1001 &1099172034695180901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207,6 +208,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 644498021587538747, guid: e25e2b256d4b7f842880c625b84b5593,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 644498021587538747, guid: e25e2b256d4b7f842880c625b84b5593,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 644498021587538749, guid: e25e2b256d4b7f842880c625b84b5593,
         type: 3}
       propertyPath: m_Name
@@ -217,6 +228,12 @@ PrefabInstance:
 --- !u!4 &1430122101403124413 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 644498021587538744, guid: e25e2b256d4b7f842880c625b84b5593,
+    type: 3}
+  m_PrefabInstance: {fileID: 1957209795383218565}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1430122101403124414 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 644498021587538747, guid: e25e2b256d4b7f842880c625b84b5593,
     type: 3}
   m_PrefabInstance: {fileID: 1957209795383218565}
   m_PrefabAsset: {fileID: 0}

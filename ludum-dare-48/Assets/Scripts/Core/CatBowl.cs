@@ -1,3 +1,4 @@
+using DuckReaction.Common;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +9,9 @@ namespace Core
 {
     public class CatBowl : GameBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
+        [SerializeField]
+        ParticleSystem _splashEffect;
+
         [ShowInInspector, ReadOnly]
         Vector3 _basePosition;
 
@@ -19,6 +23,15 @@ namespace Core
         {
             _basePosition = transform.position;
             _camera = Camera.main;
+        }
+
+        protected override void OnGameEventReceived(GameEvent ge)
+        {
+            base.OnGameEventReceived(ge);
+            if (ge.Is(CoreGameEventType.CatStartEating))
+            {
+                _splashEffect.Play();
+            }
         }
 
         public void OnBeginDrag(PointerEventData eventData)
