@@ -45,6 +45,8 @@ namespace Core
         RandomRange _meowDelay = new RandomRange(1f, 20f);
         [SerializeField]
         ParticleSystem[] _comboEffects;
+        [SerializeField]
+        ParticleSystem _appearEffect;
 
         Animator _animator;
         public Animator animator
@@ -77,6 +79,11 @@ namespace Core
             base.Start();
 
             _blinkDelay.Next();
+        }
+
+        public void OnAfterSpawn()
+        {
+            _appearEffect.Play();
         }
 
         protected override void Update()
