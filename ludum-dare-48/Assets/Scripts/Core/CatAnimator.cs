@@ -43,6 +43,8 @@ namespace Core
         RandomRange _yawnDelay = new RandomRange(4f, 20f);
         [SerializeField]
         RandomRange _meowDelay = new RandomRange(1f, 20f);
+        [SerializeField]
+        ParticleSystem[] _comboEffects;
 
         Animator _animator;
         public Animator animator
@@ -54,6 +56,19 @@ namespace Core
                     _animator = GetComponentInChildren<Animator>();
                 }
                 return _animator;
+            }
+        }
+
+        private CatAI _ai;
+        public CatAI ai
+        {
+            get
+            {
+                if (_ai == null)
+                {
+                    _ai = GetComponent<CatAI>();
+                }
+                return _ai;
             }
         }
 
@@ -70,6 +85,18 @@ namespace Core
             UpdateRandomRange(_blinkDelay, "Blink");
             UpdateRandomRange(_yawnDelay, "Yawn");
             UpdateRandomRange(_meowDelay, "Meow");
+        }
+
+        protected override void OnGameEventReceived(GameEvent ge)
+        {
+            base.OnGameEventReceived(ge);
+            if (ge.Is(CoreGameEventType.StartCombo) && ai.IsHappy())
+            {
+                foreach (var effect in _comboEffects)
+                {
+                    effect.Play();
+                }
+            }
         }
 
         [ContextMenu("OnCatSmashed")]
