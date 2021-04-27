@@ -48,24 +48,27 @@ namespace Core
             _currentCamera = Camera.main;
         }
 
-        void Update()
+        public void PointerPosition(InputAction.CallbackContext context)
         {
-            Vector3 center = transform.position + _centerOffset;
-            Vector3 mouseWorldPos = GetMouseWorldPosition(center.z);
-            _target.position = mouseWorldPos + _targetOffset;
+            if (_currentCamera)
+            {
+                Vector3 center = transform.position + _centerOffset;
+                Vector3 mouseWorldPos = GetMouseWorldPosition(context.ReadValue<Vector2>(), center.z);
+                _target.position = mouseWorldPos + _targetOffset;
 
-            if (IsMouseCloseEnough(center, mouseWorldPos))
-            {
-                AnimateRigWeight(1);
-                if (IsMouseMovingEnough(mouseWorldPos))
+                if (IsMouseCloseEnough(center, mouseWorldPos))
                 {
-                    _previousMouseWorldPosition = mouseWorldPos;
-                    ai.MouseIsDetected();
+                    AnimateRigWeight(1);
+                    if (IsMouseMovingEnough(mouseWorldPos))
+                    {
+                        _previousMouseWorldPosition = mouseWorldPos;
+                        ai.MouseIsDetected();
+                    }
                 }
-            }
-            else
-            {
-                AnimateRigWeight(0);
+                else
+                {
+                    AnimateRigWeight(0);
+                }
             }
         }
 
@@ -88,9 +91,8 @@ namespace Core
             return (center - mouseWorldPos).sqrMagnitude < sqrMaxDistance;
         }
 
-        private Vector3 GetMouseWorldPosition(float zRef)
+        private Vector3 GetMouseWorldPosition(Vector3 mousePos, float zRef)
         {
-            Vector3 mousePos = Mouse.current.position.ReadValue();
             mousePos.z = zRef - _currentCamera.transform.position.z;
             var mouseWorldPos = _currentCamera.ScreenToWorldPoint(mousePos);
             return mouseWorldPos;

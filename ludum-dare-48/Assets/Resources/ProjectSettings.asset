@@ -29,7 +29,7 @@ MonoBehaviour:
     fast: 2
     normal: 1
     slow: 0.5
-    verySlow: 0.01
+    verySlow: 0.2
     distanceFromBowl: 1
     initHungry: 0.6
     hit: 0.4
