@@ -55,7 +55,6 @@ namespace Core
                 Vector3 center = transform.position + _centerOffset;
                 Vector3 mouseWorldPos = GetMouseWorldPosition(context.ReadValue<Vector2>(), center.z);
                 _target.position = mouseWorldPos + _targetOffset;
-
                 if (IsMouseCloseEnough(center, mouseWorldPos))
                 {
                     AnimateRigWeight(1);

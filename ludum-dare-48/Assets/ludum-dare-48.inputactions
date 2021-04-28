@@ -31,9 +31,9 @@
                 },
                 {
                     "name": "PointerPosition",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "9370069e-3056-4745-86b2-be0e78878c70",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 }
@@ -265,7 +265,18 @@
                     "path": "<Pointer>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse;Touch",
+                    "groups": "Keyboard&Mouse",
+                    "action": "PointerPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fdbdcd11-a34f-42bf-9269-25b2bc63312c",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
                     "action": "PointerPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
